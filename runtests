@@ -30,12 +30,18 @@ TESTNUM=8 ./vxlan-ipv4-over-ipv4-veth-lwt  0
 TESTNUM=9 ./vxlan-ipv4-over-ipv4-veth-lwt  0xfffffe
 
 testfam gnv 
-TESTNUM=1 ./geneve-ipv4-over-ipv4-veth-pair 10
-TESTNUM=2 ./geneve-ipv4-over-ipv4-veth-pair 0
-TESTNUM=3 ./geneve-ipv4-over-ipv4-veth-pair 0xfffffe
-TESTNUM=4 ./geneve-ipv4-over-ipv6-veth-pair 10
-TESTNUM=5 ./geneve-ipv4-over-ipv6-veth-pair 0
-TESTNUM=6 ./geneve-ipv4-over-ipv6-veth-pair 0xfffffe
-TESTNUM=7 ./geneve-ipv4-over-ipv4-veth-lwt  10
-TESTNUM=8 ./geneve-ipv4-over-ipv4-veth-lwt  0
-TESTNUM=9 ./geneve-ipv4-over-ipv4-veth-lwt  0xfffffe
+TESTNUM=1  ./geneve-ipv4-over-ipv4-veth-pair 10
+TESTNUM=2  ./geneve-ipv4-over-ipv4-veth-pair 0
+TESTNUM=3  ./geneve-ipv4-over-ipv4-veth-pair 0xfffffe
+TESTNUM=4  ./geneve-ipv4-over-ipv6-veth-pair 10
+TESTNUM=5  ./geneve-ipv4-over-ipv6-veth-pair 0
+TESTNUM=6  ./geneve-ipv4-over-ipv6-veth-pair 0xfffffe
+TESTNUM=7  ./geneve-ipv4-over-ipv4-veth-lwt  10
+TESTNUM=8  ./geneve-ipv4-over-ipv4-veth-lwt  0
+TESTNUM=9  ./geneve-ipv4-over-ipv4-veth-lwt  0xfffffe
+TESTNUM=10 ./geneve-ipv6-over-ipv6-veth-pair 10
+TESTNUM=11 ./geneve-ipv6-over-ipv6-veth-pair 0
+TESTNUM=12 ./geneve-ipv6-over-ipv6-veth-pair 0xfffffe
+TESTNUM=10 ./geneve-ipv6-over-ipv6-veth-pair2 10
+TESTNUM=11 ./geneve-ipv6-over-ipv6-veth-pair2 0
+TESTNUM=12 ./geneve-ipv6-over-ipv6-veth-pair2 0xfffffe
