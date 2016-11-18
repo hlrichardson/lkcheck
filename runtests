@@ -19,15 +19,13 @@ testfam gre
 ./0001-gre-ipv4-over-veth-pair
 
 testfam vxlan
-TESTNUM=1 ./vxlan-ipv4-over-ipv4-veth-pair 10
-TESTNUM=2 ./vxlan-ipv4-over-ipv4-veth-pair 0
-TESTNUM=3 ./vxlan-ipv4-over-ipv4-veth-pair 0xfffffe
-TESTNUM=4 ./vxlan-ipv4-over-ipv6-veth-pair 10
-TESTNUM=5 ./vxlan-ipv4-over-ipv6-veth-pair 0
-TESTNUM=6 ./vxlan-ipv4-over-ipv6-veth-pair 0xfffffe
-TESTNUM=7 ./vxlan-ipv4-over-ipv4-veth-lwt  10
-TESTNUM=8 ./vxlan-ipv4-over-ipv4-veth-lwt  0
-TESTNUM=9 ./vxlan-ipv4-over-ipv4-veth-lwt  0xfffffe
+TESTNUM=1 ./vxlan-ipv4-over-ipv4-veth-pair
+TESTNUM=2 ./vxlan-ipv4-over-ipv6-veth-pair 10
+TESTNUM=3 ./vxlan-ipv4-over-ipv6-veth-pair 0
+TESTNUM=4 ./vxlan-ipv4-over-ipv6-veth-pair 0xfffffe
+TESTNUM=5 ./vxlan-ipv4-over-ipv4-veth-lwt  10
+TESTNUM=6 ./vxlan-ipv4-over-ipv4-veth-lwt  0
+TESTNUM=7 ./vxlan-ipv4-over-ipv4-veth-lwt  0xfffffe
 
 testfam gnv 
 TESTNUM=1  ./geneve-ipv4-over-ipv4-veth-pair 10

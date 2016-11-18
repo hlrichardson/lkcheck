@@ -33,12 +33,6 @@ ip netns exec ns1 ip link add gnv1 type geneve dstport 4789 id $VNI remote fc00:
 ip netns exec ns1 ip addr add "fc01::2/96" dev gnv1
 ip netns exec ns1 ip link set dev gnv1 up mtu 1400
 
-ip netns exec ns0 ping6 -c 3 fc01::1
-ip netns exec ns0 ping6 -c 3 fc01::2
-
-ip netns exec ns1 ping6 -c 3 fc01::2
-ip netns exec ns1 ping6 -c 3 fc01::1
-
 ##############################################################################
 # Execution
 chk_ping_ipv6 ns0 fc01::1         || PASSED=false

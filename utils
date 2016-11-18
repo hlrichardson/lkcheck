@@ -24,6 +24,31 @@ chk_ping_ipv4 () {
 export -f chk_ping_ipv4
 
 #
+# chk_ping_ipv6 <namespace> <remote IP>
+#
+chk_ping_ipv6 () {
+    local SRCNS=$1
+    local IP=$2
+
+    sleep 2
+    RESULT=$(ip netns exec $SRCNS ping6 -q -c 3 -i 0.3 -w 2 $IP | grep "transmitted" | sed 's/, time.*ms$//')
+    EXPECT="3 packets transmitted, 3 received, 0% packet loss"
+    if [ "$RESULT" = "$EXPECT" ]; then
+        return 0
+    else
+	if $TST_DEBUG ; then
+            echo "    ipv6 ping failed:\n" 
+            echo "        expected: $EXPECT"
+            echo "        found:    $RESULT"  
+            echo "Stopping for debug, \"exit\" to continue"
+            /bin/bash
+	fi
+        return 1
+    fi
+}
+export -f chk_ping_ipv6
+
+#
 # chk_iperf_tcpv4 <ns-client> <ns-server> <remote IP>
 #
 chk_iperf_tcpv4 () {
