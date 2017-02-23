@@ -1,9 +1,8 @@
 #!/bin/bash
-TESTNUM=$(basename $0 | sed 's/-.*$//')
-TESTID=$(printf "%5s-%04d" $TESTFAM $TESTNUM)
-
-#                 ................................................. 
-echo -n "$TESTID: 802.3ad bond over veth pair ....................."
+TESTFAM=bond
+source $(dirname $0)/../utils
+#                 .................................................
+echo -n "$TESTID: 802.3ad bond over veth pairs ...................."
 PASSED=true
 
 ##############################################################################
@@ -48,3 +47,12 @@ chk_iperf_tcpv4 ns0 ns1 1.1.1.2   || PASSED=false
 # Cleanup
 ip netns del ns0
 ip netns del ns1
+
+##############################################################################
+# Result
+if $PASSED ; then
+    echo " [PASS]"
+else
+    echo " [FAIL]"
+fi
+
