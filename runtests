@@ -26,3 +26,5 @@ gnv/0002-geneve-ipv4-over-ipv4-veth-lwt
 gnv/0003-geneve-ipv4-over-ipv6-veth-pair
 gnv/0004-geneve-ipv6-over-ipv6-veth-pair
 gnv/0005-geneve-ipv6-over-ipv6-veth-pair2 
+
+vlan/0001-ipv4-over-vlan-veth-pair
