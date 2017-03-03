@@ -28,3 +28,10 @@ gnv/0004-geneve-ipv6-over-ipv6-veth-pair
 gnv/0005-geneve-ipv6-over-ipv6-veth-pair2 
 
 vlan/0001-ipv4-over-vlan-veth-pair
+
+ipsec/0001-ipsec-esp4-aead
+ipsec/0002-ipsec-esp4-aes-sha1
+ipsec/0003-ipsec-ah4
+ipsec/0004-ipsec-esp6-aead
+ipsec/0005-ipsec-esp6-aes-sha1
+ipsec/0006-ipsec-ah6
