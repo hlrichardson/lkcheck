@@ -35,3 +35,6 @@ ipsec/0003-ipsec-ah4
 ipsec/0004-ipsec-esp6-aead
 ipsec/0005-ipsec-esp6-aes-sha1
 ipsec/0006-ipsec-ah6
+
+l2tp/0001-l2tp-udpencap-over-veth-pair
+l2tp/0002-l2tp-ipencap-over-veth-pair
