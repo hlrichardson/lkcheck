@@ -104,4 +104,4 @@ else
 fi
 
 TESTNUM=$(basename $0 | sed 's/-.*$//')
-TESTID=$(printf "%5s-%04d" $TESTFAM $TESTNUM)
+TESTID=$(printf "%6s-%04d" $TESTFAM $TESTNUM)

@@ -1,0 +1,43 @@
+#!/bin/bash
+TESTFAM="vlan"
+source $(dirname $0)/../utils
+
+#                 ................................................. 
+echo -n "$TESTID: ipv4 over vlan/veth pair ........................"
+PASSED=true
+##############################################################################
+# Setup
+ip netns add ns0
+ip netns add ns1
+
+ip link add p0 type veth peer name p1
+
+ip link set p0 netns ns0
+ip netns exec ns0 ip link add name p0.100 link p0 type vlan id 100
+ip netns exec ns0 ip address add "1.1.1.1/24" dev p0.100
+ip netns exec ns0 ip link set dev p0 up
+ip netns exec ns0 ip link set dev p0.100 up
+
+ip link set p1 netns ns1
+ip netns exec ns1 ip link add name p1.100 link p1 type vlan id 100
+ip netns exec ns1 ip addr add "1.1.1.2/24" dev p1.100
+ip netns exec ns1 ip link set dev p1 up
+ip netns exec ns1 ip link set dev p1.100 up
+
+##############################################################################
+# Execution
+chk_ping_ipv4 ns0 1.1.1.2         || PASSED=false
+chk_iperf_tcpv4 ns0 ns1 1.1.1.2   || PASSED=false
+
+##############################################################################
+# Cleanup
+ip netns del ns0
+ip netns del ns1
+
+##############################################################################
+# Result
+if $PASSED ; then
+    echo " [PASS]"
+else
+    echo " [FAIL]"
+fi
