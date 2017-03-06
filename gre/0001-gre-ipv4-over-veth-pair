@@ -1,6 +1,6 @@
 #!/bin/bash
-TESTNUM=$(basename $0 | sed 's/-.*$//')
-TESTID=$(printf "%5s-%04d" $TESTFAM $TESTNUM)
+TESTFAM=gre
+source $(dirname $0)/../utils
 
 #                 ................................................. 
 echo -n "$TESTID: ipv4 over gre tunnel over veth pair.............."

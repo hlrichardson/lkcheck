@@ -5,7 +5,7 @@ chk_ping_ipv4 () {
     local SRCNS=$1
     local IP=$2
 
-    sleep 2
+    #sleep 1
     RESULT=$(ip netns exec $SRCNS ping -q -c 3 -i 0.3 -w 2 $IP | grep "transmitted" | sed 's/, time.*ms$//')
     EXPECT="3 packets transmitted, 3 received, 0% packet loss"
     if [ "$RESULT" = "$EXPECT" ]; then
@@ -30,7 +30,7 @@ chk_ping_ipv6 () {
     local SRCNS=$1
     local IP=$2
 
-    sleep 2
+    #sleep 1
     RESULT=$(ip netns exec $SRCNS ping6 -q -c 3 -i 0.3 -w 2 $IP | grep "transmitted" | sed 's/, time.*ms$//')
     EXPECT="3 packets transmitted, 3 received, 0% packet loss"
     if [ "$RESULT" = "$EXPECT" ]; then
@@ -102,3 +102,6 @@ if $TST_PERF ; then
 else
     export IPERF_SECONDS=5
 fi
+
+TESTNUM=$(basename $0 | sed 's/-.*$//')
+TESTID=$(printf "%5s-%04d" $TESTFAM $TESTNUM)

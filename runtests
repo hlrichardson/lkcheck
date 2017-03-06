@@ -8,38 +8,19 @@ ROOTDIR=`pwd`/$(dirname $0)
 source $ROOTDIR/utils
 
 # Test cases
-testfam ipv4
-./0001-ipv4-over-veth-pair
+ipv4/0001-ipv4-over-veth-pair
 
-testfam ipv6
-./0001-ipv6-over-veth-pair
-./0002-ipv6-over-sit-veth
+ipv6/0001-ipv6-over-veth-pair
+ipv6/0002-ipv6-over-sit-veth
 
-testfam gre
-./0001-gre-ipv4-over-veth-pair
+gre/0001-gre-ipv4-over-veth-pair
 
-testfam vxlan
-TESTNUM=1 ./vxlan-ipv4-over-ipv4-veth-pair
-TESTNUM=2 ./vxlan-ipv4-over-ipv6-veth-pair 10
-TESTNUM=3 ./vxlan-ipv4-over-ipv6-veth-pair 0
-TESTNUM=4 ./vxlan-ipv4-over-ipv6-veth-pair 0xfffffe
-TESTNUM=5 ./vxlan-ipv4-over-ipv4-veth-lwt  10
-TESTNUM=6 ./vxlan-ipv4-over-ipv4-veth-lwt  0
-TESTNUM=7 ./vxlan-ipv4-over-ipv4-veth-lwt  0xfffffe
+vxlan/0001-vxlan-ipv4-over-ipv4-veth-pair
+vxlan/0002-vxlan-ipv4-over-ipv4-veth-lwt
+vxlan/0003-vxlan-ipv4-over-ipv6-veth-pair
 
-testfam gnv 
-TESTNUM=1  ./geneve-ipv4-over-ipv4-veth-pair 10
-TESTNUM=2  ./geneve-ipv4-over-ipv4-veth-pair 0
-TESTNUM=3  ./geneve-ipv4-over-ipv4-veth-pair 0xfffffe
-TESTNUM=4  ./geneve-ipv4-over-ipv6-veth-pair 10
-TESTNUM=5  ./geneve-ipv4-over-ipv6-veth-pair 0
-TESTNUM=6  ./geneve-ipv4-over-ipv6-veth-pair 0xfffffe
-TESTNUM=7  ./geneve-ipv4-over-ipv4-veth-lwt  10
-TESTNUM=8  ./geneve-ipv4-over-ipv4-veth-lwt  0
-TESTNUM=9  ./geneve-ipv4-over-ipv4-veth-lwt  0xfffffe
-TESTNUM=10 ./geneve-ipv6-over-ipv6-veth-pair 10
-TESTNUM=11 ./geneve-ipv6-over-ipv6-veth-pair 0
-TESTNUM=12 ./geneve-ipv6-over-ipv6-veth-pair 0xfffffe
-TESTNUM=13 ./geneve-ipv6-over-ipv6-veth-pair2 10
-TESTNUM=14 ./geneve-ipv6-over-ipv6-veth-pair2 0
-TESTNUM=15 ./geneve-ipv6-over-ipv6-veth-pair2 0xfffffe
+gnv/0001-geneve-ipv4-over-ipv4-veth-pair
+gnv/0002-geneve-ipv4-over-ipv4-veth-lwt
+gnv/0003-geneve-ipv4-over-ipv6-veth-pair
+gnv/0004-geneve-ipv6-over-ipv6-veth-pair
+gnv/0005-geneve-ipv6-over-ipv6-veth-pair2 

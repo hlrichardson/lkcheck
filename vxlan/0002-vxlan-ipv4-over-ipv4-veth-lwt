@@ -1,0 +1,63 @@
+#!/bin/bash
+TESTFAM=vxlan
+source $(dirname $0)/../utils
+
+echo "$TESTID: ipv4 over vxlan/veth ipv4 lwt:"
+run_test() {
+	VNI=$2
+	VNISTR="$(printf "%-8s" $VNI | tr ' ' '.')"
+
+	#                 ........................................+........ 
+        echo -n "    $TESTID.$1 VNI $VNISTR................................"
+	PASSED=true
+	##############################################################################
+	# Setup
+	ip netns add ns0
+	ip netns add ns1
+
+	# Create and configure veth pair
+	ip link add p0 type veth peer name p1
+
+	ip link set p0 netns ns0
+	ip netns exec ns0 ip addr add "1.1.1.1/24" dev p0
+	ip netns exec ns0 ip link set dev p0 up
+
+	ip link set p1 netns ns1
+	ip netns exec ns1 ip addr add "1.1.1.2/24" dev p1
+	ip netns exec ns1 ip link set dev p1 up
+
+	# Create and configure tunnel endpoints
+	ip netns exec ns0 ip link add vxlan1 type vxlan dstport 4789 external
+	ip netns exec ns0 ip addr add "4.1.1.1/24" dev vxlan1
+	ip netns exec ns0 ip link set dev vxlan1 up mtu 1450
+
+	ip netns exec ns1 ip link add vxlan1 type vxlan dstport 4789 external
+	ip netns exec ns1 ip addr add "4.1.2.2/24" dev vxlan1
+	ip netns exec ns1 ip link set dev vxlan1 up mtu 1450
+
+	# Create metadata tunnel routes
+	ip netns exec ns0 ip route add "4.1.2.0/24" encap ip id $VNI dst 1.1.1.2 dev vxlan1
+	ip netns exec ns1 ip route add "4.1.1.0/24" encap ip id $VNI dst 1.1.1.1 dev vxlan1
+
+	##############################################################################
+	# Execution
+	chk_ping_ipv4 ns0 4.1.2.2         || PASSED=false
+	chk_iperf_tcpv4 ns0 ns1 4.1.2.2   || PASSED=false
+
+	##############################################################################
+	# Cleanup
+	ip netns del ns0
+	ip netns del ns1
+
+	##############################################################################
+	# Result
+	if $PASSED ; then
+	    echo " [PASS]"
+	else
+	    echo " [FAIL]"
+	fi
+}
+
+run_test 1 0
+run_test 2 10
+run_test 3 0xfffffe

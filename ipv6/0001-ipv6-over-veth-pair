@@ -1,6 +1,6 @@
 #!/bin/bash
-TESTNUM=$(basename $0 | sed 's/-.*$//')
-TESTID=$(printf "%5s-%04d" $TESTFAM $TESTNUM)
+TESTFAM="ipv6"
+source $(dirname $0)/../utils
 
 #                 ................................................. 
 echo -n "$TESTID: ping6 over veth pair............................."
