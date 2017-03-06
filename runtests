@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Use upstream iproute2
-export PATH=/usr/local/bin:/home/lrichardson/git/iproute2/ip:/home/lrichardson/git/iperf/src:$PATH
-export PATH=/home/lrichard/git/iproute2/ip:$PATH
-
 ROOTDIR=`pwd`/$(dirname $0)
 source $ROOTDIR/utils
 
@@ -13,11 +9,17 @@ ipv4/0001-ipv4-over-veth-pair
 ipv6/0001-ipv6-over-veth-pair
 ipv6/0002-ipv6-over-sit-veth
 
+bond/0001-bond-802.3ad-veth-pair
+
 gre/0001-gre-ipv4-over-veth-pair
+gre/0002-gretap-ipv4-over-veth-pair
+
+macsec/0001-macsec-ipv4-over-veth-pair
 
 vxlan/0001-vxlan-ipv4-over-ipv4-veth-pair
 vxlan/0002-vxlan-ipv4-over-ipv4-veth-lwt
 vxlan/0003-vxlan-ipv4-over-ipv6-veth-pair
+#vxlan/0004-vxlan-ping6-veth-metadata
 
 gnv/0001-geneve-ipv4-over-ipv4-veth-pair
 gnv/0002-geneve-ipv4-over-ipv4-veth-lwt
