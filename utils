@@ -1,0 +1,79 @@
+#
+# chk_ping_ipv4 <namespace> <remote IP>
+#
+chk_ping_ipv4 () {
+    local SRCNS=$1
+    local IP=$2
+
+    sleep 2
+    RESULT=$(ip netns exec $SRCNS ping -q -c 3 -i 0.3 -w 2 $IP | grep "transmitted" | sed 's/, time.*ms$//')
+    EXPECT="3 packets transmitted, 3 received, 0% packet loss"
+    if [ "$RESULT" = "$EXPECT" ]; then
+        return 0
+    else
+	if $TST_DEBUG ; then
+            echo "    ipv4 ping failed:\n" 
+            echo "        expected: $EXPECT"
+            echo "        found:    $RESULT"  
+            echo "Stopping for debug, \"exit\" to continue"
+            /bin/bash
+	fi
+        return 1
+    fi
+}
+export -f chk_ping_ipv4
+
+#
+# chk_iperf_tcpv4 <ns-client> <ns-server> <remote IP>
+#
+chk_iperf_tcpv4 () {
+    local CLIENTNS=$1
+    local SERVERNS=$2
+    local IP=$3
+    local SECONDS=$IPERF_SECONDS
+    local TIMEOUT
+
+    let TIMEOUT=SECONDS+5
+
+    ip netns exec $SERVERNS iperf3 -1 -D -s
+    RAW_RESULT=$(timeout $TIMEOUT ip netns exec $CLIENTNS iperf3  -c $IP -t $SECONDS | grep receiver)
+    RAW_RESULT=$(echo $RAW_RESULT | sed 's/^.*[MG]Bytes *//' | sed 's/ *receiver.*//')
+    if $TST_PERF ; then
+        echo ""
+        echo $RAW_RESULT
+    fi
+    RESULT=$(echo $RAW_RESULT | sed 's/^.*[MG]Bytes *//' | \
+                                sed 's/ *receiver.*//' |   \
+                                sed -r 's/[1-9]+[0-9]*.* /10.0 /' \
+                              | sed 's/Mbits/Gbits/')
+ 
+    EXPECT="10.0 Gbits/sec"
+    if [ "$RESULT" = "$EXPECT" ]; then
+        return 0
+    else
+	if $TST_DEBUG ; then
+            echo "    iperf tcpv4 failed:\n" 
+            echo "        expected:   $EXPECT"
+            echo "        found:      $RESULT"  
+            echo "        raw result: $RAW_RESULT"  
+            echo "Stopping for debug, \"exit\" to continue"
+            /bin/bash
+	fi
+        return 1
+    fi
+}
+export -f chk_iperf_tcpv4
+
+testfam () {
+   export TESTFAM=$1
+   cd $ROOTDIR/$1
+}
+
+export TST_DEBUG="${TST_DEBUG:-false}"
+export TST_PERF="${TST_PERF:-false}"
+
+if $TST_PERF ; then
+    export IPERF_SECONDS=60
+else
+    export IPERF_SECONDS=5
+fi
